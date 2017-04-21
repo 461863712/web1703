@@ -1,0 +1,143 @@
+
+
+@in-image-width:200px;//内层立方体图片宽度
+@out-image-width:@in-image-width*1.5;//外层立方体图片宽度
+
+#box-effect-in{//立方体效果
+  .front-effect(@space:@in-image-width/2,@duration:5s){//前面
+    transform: translateZ(@space);
+    transition: all @duration;
+  }
+  .back-effect(@space:@in-image-width/2,@duration:5s){//后面
+    transform: translateZ(-@space);
+    transition: all @duration;
+  }
+  .left-effect(@space:@in-image-width/2,@duration:5s){//左面
+    transform:rotateY(90deg) translateZ(-@space);
+    transition: all @duration;
+  }
+  .right-effect(@space:@in-image-width/2,@duration:5s){//左面
+    transform:rotateY(90deg) translateZ(@space);
+    transition: all @duration;
+  }
+  .top-effect(@space:@in-image-width/2,@duration:5s){//左面
+    transform:rotateX(90deg) translateZ(@space);
+    transition: all @duration;
+  }
+  .bottom-effect(@space:@in-image-width/2,@duration:5s){//左面
+    transform:rotateX(90deg) translateZ(-@space);
+    transition: all @duration;
+  }
+
+
+  .container-effect{//容器的动画效果
+    animation: box-animate 10s infinite;
+  }
+}
+.in-box-effect(@space:@in-image-width/2,@duration:5s){//内层立方体的效果
+  .in-image:first-child{
+    #box-effect-in>.front-effect(@space,@duration);
+  }
+  .in-image:nth-child(2){
+    #box-effect-in>.back-effect(@space,@duration);
+  }
+  .in-image:nth-child(3){
+    #box-effect-in>.left-effect(@space,@duration);
+  }
+  .in-image:nth-child(4){
+    #box-effect-in>.right-effect(@space,@duration);
+  }
+  .in-image:nth-child(5){
+    #box-effect-in>.top-effect(@space,@duration);
+  }
+  .in-image:nth-child(6){
+    #box-effect-in>.bottom-effect(@space,@duration);
+  }
+}
+
+#box-effect-out{//立方体效果
+  .front-effect(@space:@out-image-width/2,@duration:5s){//前面
+    transform: translateZ(@space);
+    transition: all @duration;
+  }
+  .back-effect(@space:@out-image-width/2,@duration:5s){//后面
+    transform: translateZ(-@space);
+    transition: all @duration;
+  }
+  .left-effect(@space:@out-image-width/2,@duration:5s){//左面
+    transform:rotateY(90deg) translateZ(-@space);
+    transition: all @duration;
+  }
+  .right-effect(@space:@out-image-width/2,@duration:5s){//左面
+    transform:rotateY(90deg) translateZ(@space);
+    transition: all @duration;
+  }
+  .top-effect(@space:@out-image-width/2,@duration:5s){//左面
+    transform:rotateX(90deg) translateZ(@space);
+    transition: all @duration;
+  }
+  .bottom-effect(@space:@out-image-width/2,@duration:5s){//左面
+    transform:rotateX(90deg) translateZ(-@space);
+    transition: all @duration;
+  }
+
+
+  .container-effect{//容器的动画效果
+    animation: box-animate 10s infinite;
+  }
+}
+.out-box-effect(@space:@out-image-width/2,@duration:5s){//内层立方体的效果
+  .out-image:nth-child(7){
+    #box-effect-out>.front-effect(@space,@duration);
+  }
+  .out-image:nth-child(8){
+    #box-effect-out>.back-effect(@space,@duration);
+  }
+  .out-image:nth-child(9){
+    #box-effect-out>.left-effect(@space,@duration);
+  }
+  .out-image:nth-child(10){
+    #box-effect-out>.right-effect(@space,@duration);
+  }
+  .out-image:nth-child(11){
+    #box-effect-out>.top-effect(@space,@duration);
+  }
+  .out-image:nth-child(12){
+    #box-effect-out>.bottom-effect(@space,@duration);
+  }
+}
+
+//整个立方体 旋转的动画
+@keyframes box-animate {
+  0%{transform: rotateX(0deg) rotateY(0deg)}
+  100%{transform: rotateX(360deg) rotateY(360deg)}
+}
+
+body{
+  background-color: #000;
+
+  .box-container{
+    width: 400px;
+    margin: 200px auto;
+    position: relative;
+    transform-style: preserve-3d;
+    #box-effect-in>.container-effect;//调用效果
+
+    img{  position: absolute;opacity: 0.7}
+
+    .in-image{
+      width: @in-image-width;
+      @in-out-space:(@out-image-width - @in-image-width)/2;
+      left:@in-out-space;
+      top:@in-out-space;
+    }
+    .out-image{
+      width: @out-image-width;
+    }
+    .in-box-effect();//调用 内层立方体效果
+    .out-box-effect();//调用 外层立方体效果
+  }
+  .box-container:hover{
+    .out-box-effect(@out-image-width,2s);
+  }
+}
