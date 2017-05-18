@@ -4,7 +4,7 @@
 (function () {
 
     function init() {
-
+        var index=new Index();
     }
     init();
 })();
